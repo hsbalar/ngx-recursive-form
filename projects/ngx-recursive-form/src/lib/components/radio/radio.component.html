@@ -1,0 +1,8 @@
+<nz-form-item>
+  <nz-form-label [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-form-control>
+    <nz-radio-group [formControl]="control">
+      <label nz-radio [nzValue]="opt.value" *ngFor="let opt of field.options">{{opt.label}}</label>
+    </nz-radio-group>
+  </nz-form-control>
+</nz-form-item>

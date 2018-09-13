@@ -1,0 +1,15 @@
+<nz-form-item>
+  <nz-form-label [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-tooltip [nzTitle]="field.description" class="control-info" *ngIf="field.description">
+    <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+  </nz-tooltip>
+  <nz-form-control>
+    <nz-select [formControl]="control" [nzShowSearch]="field.showSearch" [nzAllowClear]="field.allowClear"
+      [nzMode]="field.mode || 'default'" [nzPlaceHolder]="field.placeholder">
+      <nz-option [nzValue]="opt.value" [nzLabel]="opt.label" [nzCustomContent]="opt.content" [nzDisabled]="opt.disabled"
+        *ngFor="let opt of field.options">{{opt.content}}
+      </nz-option>
+    </nz-select>
+    <nz-form-explain *ngIf="control.invalid && (control.dirty || control.touched)">Required</nz-form-explain>
+  </nz-form-control>
+</nz-form-item>

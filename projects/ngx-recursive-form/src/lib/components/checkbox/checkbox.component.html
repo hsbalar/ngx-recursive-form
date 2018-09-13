@@ -1,0 +1,15 @@
+<nz-form-item>
+  <nz-form-label [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-tooltip [nzTitle]="field.description" *ngIf="field.description">
+    <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+  </nz-tooltip>
+  <nz-form-control>
+    <nz-checkbox-wrapper [formGroup]="control">
+      <div nz-row>
+        <div nz-col nzSpan="8" *ngFor="let opt of field.options">
+          <label formControlName="{{opt.name}}" nz-checkbox nzValue="opt.value">{{opt.label}}</label>
+        </div>
+      </div>
+    </nz-checkbox-wrapper>
+  </nz-form-control>
+</nz-form-item>
