@@ -1,12 +1,5 @@
 export const model = [
   {
-    order: 1,
-    type: "string",
-    defaultValue: "scsc",
-    label: "Test",
-    name: "test"
-  },
-  {
     description: "General",
     label: "General",
     name: "general",

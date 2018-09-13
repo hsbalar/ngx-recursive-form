@@ -42,14 +42,14 @@ export class AppComponent {
   constructor(public ngxForm: NgxRecursiveFormService) {}
 
   ngOnInit() {
-    this.config = { test: 'ccc', advanced: { loadUser: 'adsda' }};
+    this.config = { test: 'ccc', advanced: { loadUser: 'zz' }};
     
     model.forEach(field => {
       this.path = field.name || '';
       this.validateJson(field);
     });
     console.log(model);
-    // this.form = this.ngxForm.toFormGroup(model);
+    this.form = this.ngxForm.toFormGroup(model);
 
   }
 
@@ -105,9 +105,9 @@ export class AppComponent {
     } else {
       let arrayPath = this.path.split('.');
       let value = this.get(arrayPath, this.config);       
-      field.defaultValue = value;
+      if (value) field.defaultValue = value;
       this.path = this.path.replace(`.${field.name}`, '');
-    }    
+    }
   }
 
   
