@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { clone } from 'lodash';
+import { some } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,18 @@ export class NgxRecursiveFormService {
 
   constructor() { }
 
-  toFormGroup(formModel) {
+  toFormGroup(formModel): any {
     let formGroup = {};
+    let formControls = [];
     formModel.forEach(field => {
+      if (field.type == 'object' || field.type == 'array' || field.type == 'checkbox')
       formGroup[field.name] = this.toFormGroupFromArr(field.parameters);
+      else
+      formControls.push({ name: field.name, control: this.appendFieldFormControlToObject(field)[field.name] });
     });
-    return new FormGroup(formGroup);
+    let form = new FormGroup(formGroup);
+    formControls.forEach(f => form.addControl(f.name, f.control));
+    return form;
   }
 
   toFormGroupFromArr(arr) {
@@ -23,7 +29,7 @@ export class NgxRecursiveFormService {
     }, {}));
   }
 
-  appendFieldFormControlToObject(field, obj) {
+  appendFieldFormControlToObject(field, obj = {}) {    
     if (field.type == 'object' || field.type == 'checkbox') {
       obj[field.name] = this.toFormGroupFromArr(field.parameters)
     } else if (field.type == 'array') {
@@ -31,17 +37,10 @@ export class NgxRecursiveFormService {
         return this.toFormGroupFromArr(el);
       }));
     } else {
-      if (field.required) {
-       if (field.validations instanceof Array) {
-        field.validations.push({key: 'required'});
-       } else {
-        field.validations = [{key: 'required'}];
-       }
-      }
       obj[field.name] = new FormControl(field.defaultValue, (field.validations || []).map(v => {
-        switch (v.key) {
+        switch (v.name) {
           case "required":
-            return Validators.required;
+            return v.value ? Validators.required : null;
           case "minlength":
             return Validators.minLength(v.value);
           case "maxlength":

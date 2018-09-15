@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgxRecursiveFormService } from 'ngx-recursive-form';
 import { FormGroup } from '@angular/forms';
 import { model } from './model';
-import * as _ from 'lodash';
+import { some, clone, includes, map } from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -42,15 +42,15 @@ export class AppComponent {
   constructor(public ngxForm: NgxRecursiveFormService) {}
 
   ngOnInit() {
-    this.config = { test: 'ccc', advanced: { loadUser: 'zz' }};
-    
+    this.config = {test: 'ccc', advanced: { loadUser: 'zz' }, general: { connection: { language: [ { languageName: 'x', experience: 11}]}}};
+
     model.forEach(field => {
-      this.path = field.name || '';
+      this.path = field.name;
       this.validateJson(field);
     });
-    console.log(model);
     this.form = this.ngxForm.toFormGroup(model);
-
+    console.log(model);
+    
   }
 
   toFormGroupFromArr(arr) {
@@ -61,8 +61,7 @@ export class AppComponent {
   }
 
   submitForm() {
-    
-    // console.log(this.form.value); 
+    console.log(model);
   }
 
   get = (p, o) =>
@@ -70,42 +69,30 @@ export class AppComponent {
 
   validateJson(field: any) {
 
-    if (!_.includes(this.types, field.type) || !field.hasOwnProperty('name')) {
-      console.log(field);
+    if (!includes(this.types, field.type) || !field.hasOwnProperty('name')) {
       return;
-    }    
+    }
 
     if (field.type == 'object' || field.type == 'checkbox') {
       this.toFormGroupFromArr(field.parameters);
       this.path = this.path.replace(`.${field.name}`, '');
     } else if (field.type == 'array') {
-
-      let arrayPath = this.path.split('.');
-      let value: any = this.get(arrayPath, this.config) || [];
-      let fieldParameters: any = _.clone(field.parameters);
-
+      let value: any = this.get(this.path.split('.'), this.config) || [];
+      let fieldParameters: any = clone(field.parameters);
       let configValuesArray = [];
+
       value.forEach((rs) => {
-        let formedArray = [];
-        fieldParameters.forEach((el) => {
-          let rowEle = _.clone(el);
-          rowEle.defaultValue = rs[el.name];
-          formedArray.push(rowEle);
-        });
-        configValuesArray.push(formedArray);
+        configValuesArray.push(map(field.parameters, el => Object.assign({}, el, { defaultValue: rs[el.name] })));
       });
       
       field.defaultValue = configValuesArray;
-      
-      field.defaultValue.forEach((el, index) => {
-        this.toFormGroupFromArr(el);
-      });
+      field.defaultValue.forEach((el) => this.toFormGroupFromArr(el));
 
       this.path = this.path.replace(`.${field.name}`, '');
     } else {
-      let arrayPath = this.path.split('.');
-      let value = this.get(arrayPath, this.config);       
+      let value = this.get(this.path.split('.'), this.config);       
       if (value) field.defaultValue = value;
+      if (some(field.validations || [], { name: 'required', value: true })) { field.required = true; };
       this.path = this.path.replace(`.${field.name}`, '');
     }
   }

@@ -1,5 +1,8 @@
 <nz-form-item>
-  <nz-form-label [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-form-label [nzRequired]="field.required" [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-tooltip [nzTitle]="field.description" class="control-info" *ngIf="field.description">
+    <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+  </nz-tooltip>
   <nz-form-control>
     <nz-radio-group [formControl]="control">
       <label nz-radio [nzValue]="opt.value" *ngFor="let opt of field.options">{{opt.label}}</label>

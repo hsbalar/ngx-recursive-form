@@ -1,5 +1,15 @@
 export const model = [
   {
+    order: 1,
+    type: "string",
+    defaultValue: "scsc",
+    label: "Test",
+    name: "test",
+    validations: [
+      { name: "required", value: true }
+    ]
+  },
+  {
     description: "General",
     label: "General",
     name: "general",

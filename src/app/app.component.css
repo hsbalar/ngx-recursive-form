@@ -40,6 +40,19 @@
   transition: background-color 0.4s;
 }
 
+::ng-deep .dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all .3s;
+}
+
+::ng-deep .dynamic-delete-button:hover {
+  color: #777;
+}
+
 * {
   font-family: cursive;
 }

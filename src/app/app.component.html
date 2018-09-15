@@ -2,9 +2,9 @@
     <nz-header>
       <div class="logo">ngx-recursive-form</div>
     </nz-header>
-    <nz-content style="padding:50px 50px 0px 50px;">
+    <nz-content style="padding:50px;">
       <div style="background:#fff; padding: 24px; min-height: 280px;">
-        <form nz-form [nzLayout]="'horizontal'" [formGroup]="form" (ngSubmit)="submitForm()">
+        <form nz-form [nzLayout]="'verticle'" [formGroup]="form" (ngSubmit)="submitForm()">
           <div *ngFor="let field of model">
             <ngx-recursive-form [field]="field" [abstractControl]="form.get(field.name)"></ngx-recursive-form>
           </div>

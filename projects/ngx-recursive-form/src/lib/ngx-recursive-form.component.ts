@@ -73,6 +73,7 @@ export class NgxRecursiveFormComponent implements OnInit {
   }
 
   addField(): void {
+    console.log(this.field);
     this.field.defaultValue.push(this.field.parameters);
     (this.abstractControl as FormArray).push(this.ngxRecursiveFormService.toFormGroupFromArr(this.field.parameters));
   }
