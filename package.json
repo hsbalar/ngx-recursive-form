@@ -1,13 +1,22 @@
 {
   "name": "ngx-recursive-form-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Angular recursive form based on config JSON",
+  "author": {
+    "name": "Hitesh Balar",
+    "email": "hsbalar@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hsblar/ngx-recursive-form"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build-lib": "ng build --prod ngx-recursive-form",
-    "npm_pack": "cd dist/example-ng6-lib && npm pack",
-    "package": "npm run build_lib && npm run npm_pack",
+    "npm-pack": "cd dist/ngx-recursive-form && npm pack",
+    "package": "npm run build-lib && npm run npm-pack",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
