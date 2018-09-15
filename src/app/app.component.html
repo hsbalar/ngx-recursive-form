@@ -1,17 +1,18 @@
 <nz-layout class="layout">
-    <nz-header>
-      <div class="logo">ngx-recursive-form</div>
-    </nz-header>
-    <nz-content style="padding:50px;">
-      <div style="background:#fff; padding: 24px; min-height: 280px;">
-        <form nz-form [nzLayout]="'verticle'" [formGroup]="form" (ngSubmit)="submitForm()">
-          <div *ngFor="let field of model">
-            <ngx-recursive-form [field]="field" [abstractControl]="form.get(field.name)"></ngx-recursive-form>
-          </div>
-          <br>
-          <button nz-button type="submit">Submit</button>
-        </form>
-      </div>
-    </nz-content>
-  <nz-footer style="text-align: center;">Made with <i class="anticon anticon-heart" style="color: red"></i> By Hitesh Balar</nz-footer>
+  <nz-header>
+    <div class="logo">ngx-recursive-form</div>
+  </nz-header>
+  <nz-content>
+    <div style="background:#fff; padding: 24px; min-height: 280px;">
+      <form nz-form [nzLayout]="'verticle'" [formGroup]="form" (ngSubmit)="submitForm()" *ngIf="form">
+        <div *ngFor="let field of model">
+          <ngx-recursive-form [field]="field" [abstractControl]="form.get(field.name)"></ngx-recursive-form>
+        </div>
+        <br>
+        <button nz-button type="submit">Submit</button>
+      </form>
+    </div>
+  </nz-content>
+  <nz-footer style="text-align: center;">Made with <i class="anticon anticon-heart" style="color: red"></i> By Hitesh
+    Balar</nz-footer>
 </nz-layout>

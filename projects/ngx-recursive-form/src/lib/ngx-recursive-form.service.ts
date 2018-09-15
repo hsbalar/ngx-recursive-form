@@ -1,13 +1,50 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { some } from 'lodash';
+import { some, includes, map } from 'lodash';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NgxRecursiveFormService {
 
+  formConfig: any;
+  formValue: any;
+  errorStatus: any;
+  path: string;
+  types: any = [
+    'string',
+    'array',
+    'password',
+    'textarea',
+    'stringWithAutoComplete',
+    'textareaWithAutoComplete',
+    'number',
+    'select',
+    'async-select',
+    'checkbox',
+    'radio',
+    'date',
+    'dateRange',
+    'boolean',
+    'object'
+  ];
+
   constructor() { }
+
+  initNgxRecursiveForm(formJsonConfig: any, formValueConfig: any = {}): Observable<any> {
+    return new Observable((observer: Observer<any>) => {
+      this.formConfig = formJsonConfig;
+      this.formValue = formValueConfig;
+      this.initializeAndValidateModel();
+      if (this.errorStatus) {
+        observer.error({ message: "Invalid JSON config provided."});
+        observer.complete();
+      }
+      observer.next(this.toFormGroup(this.formConfig));
+      observer.complete();
+    });
+  }
 
   toFormGroup(formModel): any {
     let formGroup = {};
@@ -55,5 +92,48 @@ export class NgxRecursiveFormService {
       }));
     }
     return obj;
+  }
+
+  initializeAndValidateModel() {
+    this.errorStatus = false;
+    this.formConfig.forEach(field => {
+      this.path = field.name;
+      this.validateJson(field);
+    });    
+  }
+
+  toFormGroupFromArrForValidation(arr) {
+    arr.reduce((acc, cur) => {
+      this.path = `${this.path}.${cur.name}`;
+      return this.validateJson(cur);
+    }, {});
+  }
+
+  get = (p, o) =>
+    p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);
+
+  validateJson(field: any) {
+    if (!includes(this.types, field.type) || !field.hasOwnProperty('name')) {
+      this.errorStatus = true;
+      return;
+    }
+    if (field.type == 'object' || field.type == 'checkbox') {
+      this.toFormGroupFromArrForValidation(field.parameters);
+      this.path = this.path.replace(`.${field.name}`, '');
+    } else if (field.type == 'array') {
+      let value: any = this.get(this.path.split('.'), this.formConfig) || [];
+      let configValuesArray = [];
+      value.forEach((rs) => {
+        configValuesArray.push(map(field.parameters, el => Object.assign({}, el, { defaultValue: rs[el.name] })));
+      });
+      field.defaultValue = configValuesArray;
+      field.defaultValue.forEach((el) => this.toFormGroupFromArrForValidation(el));
+      this.path = this.path.replace(`.${field.name}`, '');
+    } else {
+      let value = this.get(this.path.split('.'), this.formConfig);       
+      if (value) field.defaultValue = value;
+      if (some(field.validations || [], { name: 'required', value: true })) { field.required = true; };
+      this.path = this.path.replace(`.${field.name}`, '');
+    }
   }
 }
