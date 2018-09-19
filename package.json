@@ -22,7 +22,10 @@
     "build": "ng build",
     "build-lib": "ng build --prod ngx-recursive-form",
     "npm-pack": "cd dist/ngx-recursive-form && npm pack",
-    "package": "npm run build-lib && npm run npm-pack",
+    "package": "npm run build-lib && npm run copy-files && npm run npm-pack",
+    "copy-license": "copy .\\LICENSE .\\dist\\ngx-recursive-form",
+    "copy-readme": "copy .\\README.md .\\dist\\ng-recursive-form",
+    "copy-files": "npm run copy-license && npm run copy-readme",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -39,7 +42,9 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
     "lodash": "^4.17.10",
+    "ng-ace-tern": "^1.1.0",
     "ng-zorro-antd": "^1.4.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"

@@ -11,7 +11,7 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-control>
-        <button nz-button nzType="dashed" (click)="addField()">
+        <button nz-button nzType="dashed" (click)="addField($event)">
           <i class="anticon anticon-plus"></i> Add field</button>
       </nz-form-control>
     </nz-form-item>
@@ -34,8 +34,14 @@
 <ng-template #stringWithAutoComplete let-field="field" let-control="control">
   <ngx-string-with-auto-complete [field]="field" [control]="control"></ngx-string-with-auto-complete>
 </ng-template>
+<ng-template #textareaWithAutoComplete let-field="field" let-control="control">
+  <ngx-textarea-with-auto-complete [field]="field" [control]="control"></ngx-textarea-with-auto-complete>
+</ng-template>
 <ng-template #number let-field="field" let-control="control">
   <ngx-number [field]="field" [control]="control"></ngx-number>
+</ng-template>
+<ng-template #password let-field="field" let-control="control">
+  <ngx-password [field]="field" [control]="control"></ngx-password>
 </ng-template>
 <ng-template #select let-field="field" let-control="control">
   <ngx-select [field]="field" [control]="control"></ngx-select>

@@ -1,0 +1,14 @@
+<nz-form-item>
+  <nz-form-label [nzFor]="field.name">{{field.label}}</nz-form-label>
+  <nz-tooltip [nzTitle]="field.description" class="control-info" *ngIf="field.description">
+    <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+  </nz-tooltip>
+  <nz-form-control>
+    <textarea nz-input [formControl]="control" [placeholder]="field.placeholder || ''" [nzAutosize]="field.size"
+      [nzAutocomplete]="autoCompleteTag"></textarea>
+    <nz-autocomplete #autoCompleteTag>
+      <nz-auto-option [nzValue]="opt" *ngFor="let opt of field.options">{{opt}}</nz-auto-option>
+    </nz-autocomplete>
+    <nz-form-explain class="text-error" *ngIf="control.invalid && (control.dirty || control.touched)">Required</nz-form-explain>
+  </nz-form-control>
+</nz-form-item>

@@ -1,0 +1,218 @@
+[
+  {
+      "order": 1,
+      "type": "string",
+      "defaultValue": "Lorem Ipsum ",
+      "label": "Lorem Ipsum",
+      "name": "loremipsum ",
+      "validations": [
+          {
+              "name": "required",
+              "value": true
+          }
+      ]
+  },
+  {
+      "order": 4,
+      "name": "gender",
+      "label": "Gender",
+      "type": "radio",
+      "defaultValue": null,
+      "options": [
+          {
+              "label": "Male",
+              "value": "m"
+          },
+          {
+              "label": "Female",
+              "value": "f"
+          }
+      ]
+  },
+  {
+      "order": 10,
+      "name": "skills",
+      "label": "Skills",
+      "type": "checkbox",
+      "options": [
+          {
+              "label": "Java",
+              "value": "java",
+              "name": "java",
+              "type": "option",
+              "defaultValue": true
+          },
+          {
+              "label": "JavaScript",
+              "value": "javaScript",
+              "name": "javaScript",
+              "type": "option",
+              "defaultValue": true
+          },
+          {
+              "label": "Python",
+              "value": "python",
+              "type": "option",
+              "name": "python",
+              "defaultValue": false
+          },
+          {
+              "label": "Node.js",
+              "value": "node",
+              "type": "option",
+              "name": "node",
+              "defaultValue": false
+          }
+      ]
+  },
+  {
+      "description": "General",
+      "label": "General",
+      "name": "general",
+      "type": "object",
+      "parameters": [
+          {
+              "order": 1,
+              "type": "string",
+              "label": "Working Directory",
+              "name": "workingDir",
+              "required": false
+          },
+          {
+              "order": 1,
+              "type": "date",
+              "format": "yyyy/mm/dd",
+              "label": "Date",
+              "name": "date"
+          },
+          {
+              "order": 1,
+              "type": "dateRange",
+              "format": "yyyy/mm/dd",
+              "label": "Date Range",
+              "name": "dateRange"
+          },
+          {
+              "order": 2,
+              "type": "select",
+              "defaultValue": "BINARY",
+              "label": "Transfer Mode",
+              "name": "transferMode",
+              "allowClear": false,
+              "showSearch": false,
+              "mode": "default",
+              "options": [
+                  {
+                      "label": "BINARY",
+                      "value": "BINARY"
+                  },
+                  {
+                      "label": "ASCII",
+                      "value": "ASCII"
+                  }
+              ]
+          },
+          {
+              "name": "connection",
+              "label": "Connection",
+              "type": "object",
+              "order": 3,
+              "parameters": [
+                  {
+                      "order": 10,
+                      "name": "active",
+                      "label": "Active",
+                      "type": "boolean",
+                      "defaultValue": false
+                  },
+                  {
+                      "order": 1,
+                      "type": "string",
+                      "label": "Host",
+                      "name": "host"
+                  },
+                  {
+                      "order": 2,
+                      "type": "number",
+                      "defaultValue": "21",
+                      "description": "The port number of the FTP server to connect",
+                      "label": "Port",
+                      "name": "port"
+                  },
+                  {
+                      "order": 2,
+                      "type": "password",
+                      "description": "Password for the FTP Server.",
+                      "label": "Password",
+                      "name": "password"
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "name": "advanced",
+      "type": "object",
+      "label": "Advanced",
+      "parameters": [
+          {
+              "type": "async-select",
+              "description": "Lazy load",
+              "apiUrl": "https://api.randomuser.me",
+              "label": "Select users (Ajax loading)",
+              "name": "loadUser",
+              "mode": "multiple",
+              "placeholder": "Select user"
+          },
+          {
+            "order": 3,
+            "name": "language",
+            "label": "Languages you know",
+            "type": "array",
+            "parameters": [
+                {
+                    "name": "languageName",
+                    "label": "Language Name",
+                    "type": "string",
+                    "placeholder": "Input language name"
+                },
+                {
+                    "name": "experience",
+                    "label": "Total Experience",
+                    "type": "number",
+                    "placeholder": "Total experience in year"
+                }
+            ],
+            "defaultValue": []
+        }
+      ]
+  },
+  {
+      "order": 9,
+      "name": "about",
+      "label": "About",
+      "type": "textarea",
+      "defaultValue": null,
+      "placeholder": "Tell us about you...",
+      "size": {
+          "minRows": 2,
+          "maxRows": 6
+      }
+  },
+  {
+      "order": 9,
+      "name": "aboutTextarea",
+      "label": "About Textarea",
+      "type": "textareaWithAutoComplete",
+      "defaultValue": null,
+      "placeholder": "Tell us about you...",
+      "size": {
+          "minRows": 2,
+          "maxRows": 6
+      },
+      "options": [
+          "I'm batman",
+          "I'm hsbalar"
+      ]
+  }
+]

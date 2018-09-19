@@ -15,6 +15,7 @@ export class NgxRecursiveFormComponent implements OnInit {
   @ViewChild('stringWithAutoComplete') stringWithAutoComplete: TemplateRef<any>;
   @ViewChild('textareaWithAutoComplete') textareaWithAutoComplete: TemplateRef<any>;
   @ViewChild('number') number: TemplateRef<any>;
+  @ViewChild('password') password: TemplateRef<any>;
   @ViewChild('select') select: TemplateRef<any>;
   @ViewChild('asyncSelect') asyncSelect: TemplateRef<any>;
   @ViewChild('checkbox') checkbox: TemplateRef<any>;
@@ -43,6 +44,8 @@ export class NgxRecursiveFormComponent implements OnInit {
         return this.textareaWithAutoComplete;
       case "number":
         return this.number;
+      case "password":
+        return this.password;
       case "select":
         return this.select;
       case "async-select":
@@ -72,8 +75,8 @@ export class NgxRecursiveFormComponent implements OnInit {
       return {'field': f, 'control': this.abstractControl};
   }
 
-  addField(): void {
-    console.log(this.field);
+  addField(e: Event): void {
+    e.preventDefault();
     this.field.defaultValue.push(this.field.parameters);
     (this.abstractControl as FormArray).push(this.ngxRecursiveFormService.toFormGroupFromArr(this.field.parameters));
   }

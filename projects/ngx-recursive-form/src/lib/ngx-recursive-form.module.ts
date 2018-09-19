@@ -18,6 +18,8 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { BooleanComponent } from './components/boolean/boolean.component';
 import { DateComponent } from './components/date/date.component';
 import { DateRangeComponent } from './components/date-range/date-range.component';
+import { PasswordComponent } from './components/password/password.component';
+import { TextareaWithAutoCompleteComponent } from './components/textarea-with-auto-complete/textarea-with-auto-complete.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,7 @@ import { DateRangeComponent } from './components/date-range/date-range.component
     NgZorroAntdModule,
     ReactiveFormsModule,
   ],
-  declarations: [NgxRecursiveFormComponent, AsyncSelectComponent, NumberComponent, SelectComponent, StringComponent, StringWithAutoCompleteComponent, TextareaComponent, RadioComponent, CheckboxComponent, BooleanComponent, DateComponent, DateRangeComponent],
+  declarations: [NgxRecursiveFormComponent, AsyncSelectComponent, NumberComponent, SelectComponent, StringComponent, StringWithAutoCompleteComponent, TextareaComponent, RadioComponent, CheckboxComponent, BooleanComponent, DateComponent, DateRangeComponent, PasswordComponent, TextareaWithAutoCompleteComponent],
   exports: [NgxRecursiveFormComponent],
   providers: [NgxRecursiveFormService]
 })

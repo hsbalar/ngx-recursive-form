@@ -22,6 +22,7 @@ export class NgxRecursiveFormService {
     'number',
     'select',
     'async-select',
+    'option',
     'checkbox',
     'radio',
     'date',
@@ -50,8 +51,10 @@ export class NgxRecursiveFormService {
     let formGroup = {};
     let formControls = [];
     formModel.forEach(field => {
-      if (field.type == 'object' || field.type == 'array' || field.type == 'checkbox')
+      if (field.type == 'object' || field.type == 'array')
       formGroup[field.name] = this.toFormGroupFromArr(field.parameters);
+      else if (field.type == 'checkbox')
+      formGroup[field.name] = this.toFormGroupFromArr(field.options);
       else
       formControls.push({ name: field.name, control: this.appendFieldFormControlToObject(field)[field.name] });
     });
@@ -67,8 +70,10 @@ export class NgxRecursiveFormService {
   }
 
   appendFieldFormControlToObject(field, obj = {}) {    
-    if (field.type == 'object' || field.type == 'checkbox') {
-      obj[field.name] = this.toFormGroupFromArr(field.parameters)
+    if (field.type == 'object') {
+      obj[field.name] = this.toFormGroupFromArr(field.parameters);
+    } else if (field.type == 'checkbox') {
+      obj[field.name] = this.toFormGroupFromArr(field.options);
     } else if (field.type == 'array') {
       obj[field.name] = new FormArray(field.defaultValue.map((el, index) => {
         return this.toFormGroupFromArr(el);
@@ -117,11 +122,14 @@ export class NgxRecursiveFormService {
       this.errorStatus = true;
       return;
     }
-    if (field.type == 'object' || field.type == 'checkbox') {
+    if (field.type == 'object') {
       this.toFormGroupFromArrForValidation(field.parameters);
       this.path = this.path.replace(`.${field.name}`, '');
+    } else if (field.type == 'checkbox') {
+      this.toFormGroupFromArrForValidation(field.options);
+      this.path = this.path.replace(`.${field.name}`, '');
     } else if (field.type == 'array') {
-      let value: any = this.get(this.path.split('.'), this.formConfig) || [];
+      let value: any = this.get(this.path.split('.'), this.formValue) || [];
       let configValuesArray = [];
       value.forEach((rs) => {
         configValuesArray.push(map(field.parameters, el => Object.assign({}, el, { defaultValue: rs[el.name] })));
@@ -130,9 +138,15 @@ export class NgxRecursiveFormService {
       field.defaultValue.forEach((el) => this.toFormGroupFromArrForValidation(el));
       this.path = this.path.replace(`.${field.name}`, '');
     } else {
-      let value = this.get(this.path.split('.'), this.formConfig);       
+      let value = this.get(this.path.split('.'), this.formValue);       
       if (value) field.defaultValue = value;
       if (some(field.validations || [], { name: 'required', value: true })) { field.required = true; };
+      if (field.required) {
+        if ((field.validations instanceof Array) && !some(field.validations || [], { name: 'required', value: true }))
+          field.validations.push({ name: "required", value: true });
+        else
+          field.validations = [{ name: "required", value: true }];
+      }
       this.path = this.path.replace(`.${field.name}`, '');
     }
   }

@@ -5,7 +5,7 @@
   </nz-tooltip>
   <nz-form-control>
     <nz-select [formControl]="control" [nzShowSearch]="field.showSearch" [nzAllowClear]="field.allowClear"
-      [nzMode]="field.mode || 'default'" [nzPlaceHolder]="field.placeholder">
+      [nzMode]="field.mode || 'default'" [nzPlaceHolder]="field.placeholder || ''">
       <nz-option [nzValue]="opt.value" [nzLabel]="opt.label" [nzCustomContent]="opt.content" [nzDisabled]="opt.disabled"
         *ngFor="let opt of field.options">{{opt.content}}
       </nz-option>
