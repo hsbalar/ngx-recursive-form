@@ -1,15 +1,93 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>NgxRecursiveFormApp</title>
-  <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <script src="./assets/ace-builds/src-noconflict/ace.js"></script>
-</head>
-<body>
-  <app-root></app-root>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Ngx Recursive Form App</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="./assets/ace-builds/src-noconflict/ace.js"></script>
+  </head>
+
+  <body>
+    <app-root>
+      <div class="wrapper">
+        <div class="square-loader">
+          <div class="square first_square"></div>
+          <div class="square second_square"></div>
+          <div class="square third_square"></div>
+        </div>
+      </div>
+      <style>
+        div[class*=wrapper] {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;  
+        }
+        div[class*=loader] {
+          position: relative;
+          width: 200px;
+          height: 200px;
+        }
+
+        .square {
+          width: 20px;
+          height: 20px;
+          background-color: rgba(255,255,255,0);
+          margin-right: auto;
+          margin-left: auto;
+          border: 2px solid #1b1313;
+          left: 73px;
+          top: 73px;
+          position: absolute;
+        }
+
+        .square-loader {
+          transform: rotate(45deg);
+        }
+
+        .first_square {
+          animation: first_square_animate 1s infinite ease-in-out;
+        }
+        .second_square {
+          animation: second_square 1s forwards, 
+                    second_square_animate 1s infinite ease-in-out;
+        }	
+        .third_square {
+          animation: third_square 1s forwards, 
+                    third_square_animate 1s infinite ease-in-out;
+        }	
+            
+        @keyframes second_square {
+          100% { width: 35px; height:35px; left: 48px; top: 48px; }
+        }
+
+        @keyframes third_square {
+          100% { width: 45px; height:45px; left: 23px; top: 23px;}
+        }
+
+        @keyframes first_square_animate {
+          0%   { transform: perspective(100px) rotateX(0deg) rotateY(0deg);} 
+          50%  { transform: perspective(100px) rotateX(-180deg) rotateY(0deg); }
+          100% { transform: perspective(100px) rotateX(-180deg) rotateY(-180deg); }
+        }
+
+        @keyframes second_square_animate {
+          0%   { transform: perspective(200px) rotateX(0deg) rotateY(0deg); } 
+          50%  { transform: perspective(200px) rotateX(180deg) rotateY(0deg); } 
+          100% { transform: perspective(200px) rotateX(180deg) rotateY(180deg); }
+        }
+
+        @keyframes third_square_animate {
+          0%   { transform: perspective(300px) rotateX(0deg) rotateY(0deg); } 
+          50%  { transform: perspective(300px) rotateX(-180deg) rotateY(0deg); } 
+          100% { transform: perspective(300px) rotateX(-180deg) rotateY(-180deg); }
+        }
+      </style>
+    </app-root>
+  </body>
+
 </html>
