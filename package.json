@@ -1,6 +1,6 @@
 {
   "name": "ngx-recursive-form-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Angular recursive form based on config JSON for ng-zorro-antd",
   "author": {
     "name": "Hitesh Balar",
