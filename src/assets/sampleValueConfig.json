@@ -1,0 +1,36 @@
+{
+  "skills": {
+    "java": true,
+    "javaScript": true,
+    "python": false,
+    "node": false
+  },
+  "general": {
+    "workingDir": "test",
+    "date": "2018-09-17T06:04:04.652Z",
+    "dateRange": [
+      "2018-09-21T06:04:06.740Z",
+      "2018-10-16T06:04:06.740Z"
+    ],
+    "transferMode": "ASCII",
+    "connection": {
+      "active": true,
+      "host": null,
+      "port": "21",
+      "password": "123"
+    }
+  },
+  "advanced": {
+    "loadUser": null,
+    "language": [
+      {
+        "languageName": "JavaScript",
+        "experience": 4
+      }
+    ]
+  },
+  "loremipsum ": "Lorem Ipsum ",
+  "gender": null,
+  "about": null,
+  "aboutTextarea": "I'm batman"
+}

@@ -4,9 +4,19 @@
   <nz-step nzTitle="Value" class="step" (click)="formValueClick()"></nz-step>
 </nz-steps>
 <div class="content">
-  <div [hidden]="current !== 0" class="json-content">
-    <div #editor id="code-panel" ace-editor [text]="configString" [mode]="'json'" [theme]="'chrome'" [options]="aceOptions"
-      [readOnly]="false" style="display:block; height: 90vh; width:100%"></div>
+  <div [hidden]="current !== 0">
+    <div class="editor config-editor">
+      <strong><label for="">Config JSON</label></strong>
+      <div #editor class="json-content" ace-editor [text]="configString" [mode]="'json'" [theme]="'chrome'" [options]="aceOptions"
+        [readOnly]="false" style="display:block; height: 80vh; width:100%">
+      </div>
+    </div>
+    <div class="editor value-editor">
+      <strong><label for="">Saved Form Value</label></strong>
+      <div #editor class="json-content" ace-editor (editorRef)="editorRef($event)" [text]="valueString" [mode]="'json'" [theme]="'chrome'" [options]="aceOptions"
+        [readOnly]="false" style="display:block; height: 80vh; width:100%">
+      </div>
+    </div>
   </div>
   <div *ngIf="current == 1">
     <form nz-form [nzLayout]="'verticle'" [formGroup]="form" (ngSubmit)="formValueClick()" *ngIf="form">

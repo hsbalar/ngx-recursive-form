@@ -16,22 +16,22 @@ import { AstTransformer } from '@angular/compiler/src/output/output_ast';
 })
 export class FormxComponent implements OnInit {
   
-  form: FormGroup;
-  current = 0;
-  configJson: any = [];
-  configString: string = '';
-
-  @ViewChild(AceEditorDirective)
-  private editorDirective: AceEditorDirective;
-
-  aceOptions = {
+  public form: FormGroup;
+  public valueEditor: any;
+  public current: number = 0;
+  public configJson: any = [];
+  public valueJson: any = {};
+  public configString: string = '';
+  public valueString: string = '';  
+  public aceOptions = {
     printMargin: false,
     enableBasicAutocompletion: true,
     enableSnippets: true,
     enableLiveAutocompletion: true
   };
 
-  showCode = false;
+  @ViewChild(AceEditorDirective)
+  private editorDirective: AceEditorDirective;
 
   constructor(
     private http: HttpClient,
@@ -43,6 +43,10 @@ export class FormxComponent implements OnInit {
       .subscribe(configJson => {
         this.configString = JSON.stringify(configJson, null, 4);
       });
+    this.http.get('assets/sampleValueConfig.json')
+      .subscribe(valueJson => {
+        this.valueString = JSON.stringify(valueJson, null, 4);
+      });
   }
 
   jsonEditorClick() {
@@ -50,14 +54,17 @@ export class FormxComponent implements OnInit {
   }
 
   formEditorClick() {
-    if (this.hasEditorError()) {
+    if (this.hasEditorError() || this.hasValueEditorError()) {
       this.messageService.error("Invalid JSON");
       return;
     }
     this.current = 1;
     let text = this.editorDirective.editor.getValue();
+    let valueText = this.valueEditor.renderer.canvas.outerText || {};    
     this.configJson = JSON.parse(text);
+    this.valueJson = JSON.parse(valueText);
     this.configString = JSON.stringify(this.configJson, null, 4);
+    this.valueString = JSON.stringify(this.valueJson, null, 4);    
     this.initForm();
   }
 
@@ -67,7 +74,7 @@ export class FormxComponent implements OnInit {
   }
 
   initForm() {
-    this.ngxForm.initNgxRecursiveForm(this.configJson)
+    this.ngxForm.initNgxRecursiveForm(this.configJson, this.valueJson)
       .subscribe(form => {
         this.form = form;
       }, err => {
@@ -76,12 +83,26 @@ export class FormxComponent implements OnInit {
   }
 
   private hasEditorError() {
-    var annotations = this.editorDirective.editor.getSession().getAnnotations();
+    let annotations = this.editorDirective.editor.getSession().getAnnotations();
     for (var aid = 0, alen = annotations.length; aid < alen; ++aid) {
       if (annotations[aid].type === 'error') {
         return true;
       }
     }
     return false;
+  }
+
+  private hasValueEditorError() {
+    let annotations = this.valueEditor.session.$annotations || [];    
+    for (var aid = 0, alen = annotations.length; aid < alen; ++aid) {
+      if (annotations[aid].type === 'error') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  editorRef($event) {
+    this.valueEditor = $event;
   }
 }
