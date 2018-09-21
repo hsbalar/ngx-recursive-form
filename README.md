@@ -5,7 +5,10 @@ Angular recursive form at any level based on your json input. [`Demo`](http://ww
 
 ### Install
 
+> Note: Ngx recursive form supports only [ng-zorro-antd](https://ng.ant.design/docs/introduce/en) for now. So, you need to install it beforehand.
+
 ```bash
+$ npm install ng-zorro-antd
 $ npm install ngx-recursive-form --save
 ```
 
@@ -50,7 +53,6 @@ ngOnInit() {
 </form>
 ```
 
-### Ngx recursive form supports only [ng-zorro-antd](https://ng.ant.design/docs/introduce/en) for now
-```bash
-$ npm install ng-zorro-antd
-```
+## License
+
+MIT
