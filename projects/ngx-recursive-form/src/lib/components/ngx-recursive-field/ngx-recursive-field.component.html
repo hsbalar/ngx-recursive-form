@@ -1,0 +1,71 @@
+<ng-container [ngSwitch]="field.type">
+  <div *ngSwitchCase="'array'" class="form-box">
+    <div class="form-box-title">{{field.label}}</div>
+    <nz-form-item *ngFor="let arr of field.defaultValue; let i = index">
+      <nz-form-control>
+        <div *ngFor="let f of arr">
+          <ng-template [ngTemplateOutlet]="getTemplateOutlet(f.type)" [ngTemplateOutletContext]="getContext(f, i)"></ng-template>
+        </div>
+        <i class="anticon anticon-minus-circle-o dynamic-delete-button" (click)="removeField(i, $event)"></i>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="dashed" (click)="addField($event)">
+          <i class="anticon anticon-plus"></i> Add field</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div *ngSwitchCase="'object'" class="form-box">
+    <div class="form-box-title">{{field.label}}</div>
+    <ng-template [ngTemplateOutlet]="getTemplateOutlet(field.type)" [ngTemplateOutletContext]="getContext(field)"></ng-template>
+  </div>
+  <ng-container *ngSwitchDefault>
+    <ng-template [ngTemplateOutlet]="getTemplateOutlet(field.type)" [ngTemplateOutletContext]="getContext(field)"></ng-template>
+  </ng-container>
+</ng-container>
+
+<ng-template #string let-field="field" let-control="control">
+  <ngx-string [field]="field" [control]="control"></ngx-string>
+</ng-template>
+<ng-template #textarea let-field="field" let-control="control">
+  <ngx-textarea [field]="field" [control]="control"></ngx-textarea>
+</ng-template>
+<ng-template #stringWithAutoComplete let-field="field" let-control="control">
+  <ngx-string-with-auto-complete [field]="field" [control]="control"></ngx-string-with-auto-complete>
+</ng-template>
+<ng-template #textareaWithAutoComplete let-field="field" let-control="control">
+  <ngx-textarea-with-auto-complete [field]="field" [control]="control"></ngx-textarea-with-auto-complete>
+</ng-template>
+<ng-template #number let-field="field" let-control="control">
+  <ngx-number [field]="field" [control]="control"></ngx-number>
+</ng-template>
+<ng-template #password let-field="field" let-control="control">
+  <ngx-password [field]="field" [control]="control"></ngx-password>
+</ng-template>
+<ng-template #select let-field="field" let-control="control">
+  <ngx-select [field]="field" [control]="control"></ngx-select>
+</ng-template>
+<ng-template #asyncSelect let-field="field" let-control="control">
+  <ngx-async-select [field]="field" [control]="control"></ngx-async-select>
+</ng-template>
+<ng-template #boolean let-field="field" let-control="control">
+  <ngx-boolean [field]="field" [control]="control"></ngx-boolean>
+</ng-template>
+<ng-template #checkbox let-field="field" let-control="control">
+  <ngx-checkbox-group [field]="field" [control]="control"></ngx-checkbox-group>
+</ng-template>
+<ng-template #radio let-field="field" let-control="control">
+  <ngx-radio-group [field]="field" [control]="control"></ngx-radio-group>
+</ng-template>
+<ng-template #date let-field="field" let-control="control">
+  <ngx-date [field]="field" [control]="control"></ngx-date>
+</ng-template>
+<ng-template #dateRange let-field="field" let-control="control">
+  <ngx-date-range [field]="field" [control]="control"></ngx-date-range>
+</ng-template>
+<ng-template #object let-field="field" let-control="control">
+  <div *ngFor="let f of field.parameters;let i = index">
+    <ngx-recursive-field [field]="f" [abstractControl]="control.get(f.name)"></ngx-recursive-field>
+  </div>
+</ng-template>

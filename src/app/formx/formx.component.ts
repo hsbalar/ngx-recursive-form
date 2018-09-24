@@ -19,9 +19,9 @@ export class FormxComponent implements OnInit {
   public form: FormGroup;
   public valueEditor: any;
   public current: number = 0;
-  public configJson: any = [];
+  public formJson: any = [];
   public valueJson: any = {};
-  public configString: string = '';
+  public jsonString: string = '';
   public valueString: string = '';  
   public aceOptions = {
     printMargin: false,
@@ -40,8 +40,8 @@ export class FormxComponent implements OnInit {
 
   ngOnInit() {
     this.http.get('assets/sampleJsonConfig.json')
-      .subscribe(configJson => {
-        this.configString = JSON.stringify(configJson, null, 4);
+      .subscribe(formJson => {
+        this.jsonString = JSON.stringify(formJson, null, 4);
       });
     this.http.get('assets/sampleValueConfig.json')
       .subscribe(valueJson => {
@@ -61,9 +61,9 @@ export class FormxComponent implements OnInit {
     this.current = 1;
     let text = this.editorDirective.editor.getValue();
     let valueText = this.valueEditor.renderer.canvas.outerText || {};    
-    this.configJson = JSON.parse(text);
+    this.formJson = JSON.parse(text);
     this.valueJson = JSON.parse(valueText);
-    this.configString = JSON.stringify(this.configJson, null, 4);
+    this.jsonString = JSON.stringify(this.formJson, null, 4);
     this.valueString = JSON.stringify(this.valueJson, null, 4);    
     this.initForm();
   }
@@ -74,9 +74,10 @@ export class FormxComponent implements OnInit {
   }
 
   initForm() {
-    this.ngxForm.initNgxRecursiveForm(this.configJson, this.valueJson)
-      .subscribe(form => {
-        this.form = form;
+    this.ngxForm.initNgxRecursiveForm(this.formJson, this.valueJson)
+      .subscribe(res => {
+        this.form = res.form;
+        this.formJson = res.orderedFormJson;
       }, err => {
         this.messageService.error('Invalid JSON schema, please check name & type of control is required')
       });

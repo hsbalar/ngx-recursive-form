@@ -20,6 +20,7 @@ import { DateComponent } from './components/date/date.component';
 import { DateRangeComponent } from './components/date-range/date-range.component';
 import { PasswordComponent } from './components/password/password.component';
 import { TextareaWithAutoCompleteComponent } from './components/textarea-with-auto-complete/textarea-with-auto-complete.component';
+import { NgxRecursiveFieldComponent } from './components/ngx-recursive-field/ngx-recursive-field.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,23 @@ import { TextareaWithAutoCompleteComponent } from './components/textarea-with-au
     NgZorroAntdModule,
     ReactiveFormsModule,
   ],
-  declarations: [NgxRecursiveFormComponent, AsyncSelectComponent, NumberComponent, SelectComponent, StringComponent, StringWithAutoCompleteComponent, TextareaComponent, RadioComponent, CheckboxComponent, BooleanComponent, DateComponent, DateRangeComponent, PasswordComponent, TextareaWithAutoCompleteComponent],
+  declarations: [
+    DateComponent, 
+    RadioComponent, 
+    NumberComponent, 
+    SelectComponent, 
+    StringComponent, 
+    BooleanComponent, 
+    TextareaComponent, 
+    CheckboxComponent, 
+    PasswordComponent, 
+    DateRangeComponent, 
+    AsyncSelectComponent, 
+    NgxRecursiveFormComponent, 
+    NgxRecursiveFieldComponent,
+    StringWithAutoCompleteComponent, 
+    TextareaWithAutoCompleteComponent, 
+  ],
   exports: [NgxRecursiveFormComponent],
   providers: [NgxRecursiveFormService]
 })

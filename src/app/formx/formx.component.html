@@ -1,13 +1,13 @@
 <nz-steps [nzCurrent]="current" nzSize="small">
-  <nz-step nzTitle="JSON" class="step" (click)="jsonEditorClick()"></nz-step>
-  <nz-step nzTitle="Form" class="step" (click)="formEditorClick()"></nz-step>
-  <nz-step nzTitle="Value" class="step" (click)="formValueClick()"></nz-step>
+  <nz-step nzTitle="JSON" nzIcon="anticon anticon-arrow-right" (click)="jsonEditorClick()"></nz-step>
+  <nz-step nzTitle="Form" nzIcon="anticon anticon-arrow-right" (click)="formEditorClick()"></nz-step>
+  <nz-step nzTitle="Value" nzIcon="anticon anticon-check" (click)="formValueClick()"></nz-step>
 </nz-steps>
 <div class="content">
   <div [hidden]="current !== 0">
     <div class="editor config-editor">
-      <strong><label for="">Config JSON</label></strong>
-      <div #editor class="json-content" ace-editor [text]="configString" [mode]="'json'" [theme]="'chrome'" [options]="aceOptions"
+      <strong><label for="">Form Schema JSON</label></strong>
+      <div #editor class="json-content" ace-editor [text]="jsonString" [mode]="'json'" [theme]="'chrome'" [options]="aceOptions"
         [readOnly]="false" style="display:block; height: 80vh; width:100%">
       </div>
     </div>
@@ -20,9 +20,7 @@
   </div>
   <div *ngIf="current == 1">
     <form nz-form [nzLayout]="'verticle'" [formGroup]="form" (ngSubmit)="formValueClick()" *ngIf="form">
-      <div *ngFor="let field of configJson">
-        <ngx-recursive-form [field]="field" [abstractControl]="form.get(field.name)"></ngx-recursive-form>
-      </div>
+      <ngx-recursive-form [form]="form" [formJson]="formJson"></ngx-recursive-form>
       <br>
       <button nz-button type="submit">Submit</button>
     </form>

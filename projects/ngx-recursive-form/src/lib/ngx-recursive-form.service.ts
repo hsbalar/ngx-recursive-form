@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { some, includes, map } from 'lodash';
+import { some, includes, map, orderBy } from 'lodash';
 import { Observable, Observer } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Observable, Observer } from 'rxjs';
 })
 export class NgxRecursiveFormService {
 
-  formConfig: any;
+  formJson: any;
   formValue: any;
   errorStatus: any;
   path: string;
@@ -35,14 +35,14 @@ export class NgxRecursiveFormService {
 
   initNgxRecursiveForm(formJsonConfig: any, formValueConfig: any = {}): Observable<any> {
     return new Observable((observer: Observer<any>) => {
-      this.formConfig = formJsonConfig;
+      this.formJson = formJsonConfig;
       this.formValue = formValueConfig;
       this.initializeAndValidateModel();
       if (this.errorStatus) {
         observer.error({ message: "Invalid JSON config provided."});
         observer.complete();
       }
-      observer.next(this.toFormGroup(this.formConfig));
+      observer.next({ form: this.toFormGroup(this.formJson), orderedFormJson: this.formJson });
       observer.complete();
     });
   }
@@ -101,7 +101,8 @@ export class NgxRecursiveFormService {
 
   initializeAndValidateModel() {
     this.errorStatus = false;
-    this.formConfig.forEach(field => {
+    this.formJson = orderBy(this.formJson, ['order'], ['asc']);
+    this.formJson.forEach(field => {
       this.path = field.name;
       this.validateJson(field);
     });    
@@ -123,6 +124,7 @@ export class NgxRecursiveFormService {
       return;
     }
     if (field.type == 'object') {
+      field.parameters = orderBy(field.parameters, ['order'], ['asc']);
       this.toFormGroupFromArrForValidation(field.parameters);
       this.path = this.path.replace(`.${field.name}`, '');
     } else if (field.type == 'checkbox') {
