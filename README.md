@@ -31,12 +31,14 @@ import { NgxRecursiveFormService } from 'ngx-recursive-form';
 import { FormGroup } from '@angular/forms';
 
 public form: FormGroup;
+public formJson: any;
 constructor(public ngxFormService: NgxRecursiveFormService) {}
 
 ngOnInit() {
-  this.ngxFormService.initNgxRecursiveForm(this.configJson) // JSON schema as first parameter, Default JSON value as second parameter (optional)
-    .subscribe(form => {
-      this.form = form;
+  this.ngxFormService.initNgxRecursiveForm(this.formJson) // JSON schema as first parameter, Default JSON value as second parameter (optional)
+    .subscribe(res => {
+      this.form = res.form;
+      this.formJson = res.orderedFormJson;
     }, err => {
       console.log(err);
     });
@@ -45,10 +47,8 @@ ngOnInit() {
 
 ### Create <ngx-recursive-form> tag in your component.html file:
 ```html
-<form nz-form [formGroup]="form" (ngSubmit)="submit()">
-  <div *ngFor="let field of configJson">
-    <ngx-recursive-form [field]="field" [abstractControl]="form.get(field.name)"></ngx-recursive-form>
-  </div>
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" *ngIf="form">
+  <ngx-recursive-form [form]="form" [formJson]="formJson"></ngx-recursive-form>
   <button nz-button type="submit">Submit</button>
 </form>
 ```
