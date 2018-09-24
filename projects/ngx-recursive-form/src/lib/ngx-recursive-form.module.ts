@@ -5,22 +5,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxRecursiveFormComponent } from './ngx-recursive-form.component';
+import { NgxRecursiveFieldComponent } from './components/ngx-recursive-field/ngx-recursive-field.component';
 import { NgxRecursiveFormService } from './ngx-recursive-form.service';
 
-import { AsyncSelectComponent } from './components/async-select/async-select.component';
+import { DateComponent } from './components/date/date.component';
+import { RadioComponent } from './components/radio/radio.component';
 import { NumberComponent } from './components/number/number.component';
 import { SelectComponent } from './components/select/select.component';
 import { StringComponent } from './components/string/string.component';
-import { StringWithAutoCompleteComponent } from './components/string-with-auto-complete/string-with-auto-complete.component';
-import { TextareaComponent } from './components/textarea/textarea.component';
-import { RadioComponent } from './components/radio/radio.component';
-import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { BooleanComponent } from './components/boolean/boolean.component';
-import { DateComponent } from './components/date/date.component';
-import { DateRangeComponent } from './components/date-range/date-range.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 import { PasswordComponent } from './components/password/password.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { DateRangeComponent } from './components/date-range/date-range.component';
+import { AsyncSelectComponent } from './components/async-select/async-select.component';
+import { StringWithAutoCompleteComponent } from './components/string-with-auto-complete/string-with-auto-complete.component';
 import { TextareaWithAutoCompleteComponent } from './components/textarea-with-auto-complete/textarea-with-auto-complete.component';
-import { NgxRecursiveFieldComponent } from './components/ngx-recursive-field/ngx-recursive-field.component';
 
 @NgModule({
   imports: [
@@ -46,7 +46,10 @@ import { NgxRecursiveFieldComponent } from './components/ngx-recursive-field/ngx
     StringWithAutoCompleteComponent, 
     TextareaWithAutoCompleteComponent, 
   ],
-  exports: [NgxRecursiveFormComponent],
+  exports: [
+    NgxRecursiveFormComponent, 
+    NgxRecursiveFieldComponent
+  ],
   providers: [NgxRecursiveFormService]
 })
 export class NgxRecursiveFormModule { }

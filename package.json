@@ -1,6 +1,6 @@
 {
   "name": "ngx-recursive-form-app",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Angular recursive form based on config JSON for ng-zorro-antd",
   "author": {
     "name": "Hitesh Balar",
@@ -24,7 +24,7 @@
     "npm-pack": "cd dist/ngx-recursive-form && npm pack",
     "package": "npm run build-lib && npm run copy-files && npm run npm-pack",
     "copy-license": "copy .\\LICENSE .\\dist\\ngx-recursive-form",
-    "copy-readme": "copy .\\README.md .\\dist\\ng-recursive-form",
+    "copy-readme": "copy .\\README.md .\\dist\\ngx-recursive-form",
     "copy-files": "npm run copy-license && npm run copy-readme",
     "test": "ng test",
     "lint": "ng lint",
