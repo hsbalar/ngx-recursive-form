@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NgxRecursiveFormComponent } from './ngx-recursive-form.component';
+import { NgxRecursiveFormComponent } from "./ngx-recursive-form.component";
 
-describe('NgxRecursiveFormComponent', () => {
+describe("NgxRecursiveFormComponent", () => {
   let component: NgxRecursiveFormComponent;
   let fixture: ComponentFixture<NgxRecursiveFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxRecursiveFormComponent ]
-    })
-    .compileComponents();
+      declarations: [NgxRecursiveFormComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('NgxRecursiveFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
